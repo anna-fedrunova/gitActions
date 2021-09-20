@@ -18,6 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2 # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
       - name: Use node.js ${{ matrix.node }}
+        uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
       - name: Hello world action step
