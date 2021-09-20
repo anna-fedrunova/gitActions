@@ -1,14 +1,25 @@
-on: [push]
+name: My Docker workflow
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   hello_world_job:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        node: [12, 14]
     name: A job to say hello
     steps:
       # To use this repository's private action,
       # you must check out the repository
       - name: Checkout
         uses: actions/checkout@v2 # This action checks-out your repository under $GITHUB_WORKSPACE, so your workflow can access it.
+      - name: Use node.js ${{ matrix.node }}
+        with:
+          node-version: ${{ matrix.node }}
       - name: Hello world action step
         uses: ./ # Uses an action in the root directory
         id: hello
